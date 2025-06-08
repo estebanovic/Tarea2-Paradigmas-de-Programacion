@@ -4,6 +4,9 @@
  */
 package tarea2;
 
+import Controllers.Conexion;
+import java.sql.Connection;
+
 /**
  *
  * @author Esteban
@@ -14,7 +17,9 @@ public class Tarea2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        //Conectar bd sql
+        Conexion con = new Conexion();
+        Connection cn = con.Connect();
     }
     
 }
