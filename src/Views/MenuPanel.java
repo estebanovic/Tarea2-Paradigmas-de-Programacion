@@ -49,6 +49,11 @@ public class MenuPanel extends javax.swing.JPanel {
         jLabel1.setText("Sistema pruebas - Bloom");
 
         jButton1.setText("Resultados");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -83,6 +88,11 @@ public class MenuPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         mainFrame.mostrarVista("verPruebas");
     }//GEN-LAST:event_btnShowTestsActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         mainFrame.mostrarVista("verResultados");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

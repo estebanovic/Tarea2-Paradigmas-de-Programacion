@@ -18,16 +18,18 @@ public class Resultado {
     private int pruebaId;
     private Date fecha;
     private double nota;
+    private String nombrePrueba;
     private List<Respuesta> respuestas = new ArrayList<>();
 
     public Resultado() {
     }
 
-    public Resultado(int id, int pruebaId, Date fecha, double nota) {
+    public Resultado(int id, int pruebaId, Date fecha, double nota, String nombrePrueba) {
         this.id = id;
         this.pruebaId = pruebaId;
         this.fecha = fecha;
         this.nota = nota;
+        this.nombrePrueba = nombrePrueba;
     }
 
     public int getId() {
@@ -70,6 +72,12 @@ public class Resultado {
         this.respuestas = respuestas;
     }
 
-  
+    public String getNombrePrueba() {
+        return nombrePrueba;
+    }
+
+    public void setNombrePrueba(String nombrePrueba) {
+        this.nombrePrueba = nombrePrueba;
+    }
 
 }
