@@ -15,8 +15,6 @@ import Views.MenuPanel;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private CardLayout layout;
-    private JPanel contentPanel;
 
     /**
      * Creates new form MainFrame
@@ -113,6 +111,7 @@ public class MainFrame extends javax.swing.JFrame {
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel mainPanel;

@@ -175,7 +175,31 @@ public class VerResultadosPanel extends javax.swing.JPanel {
        
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    public void recargarDatos() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
 
+        ResultadoController controller = new ResultadoController();
+        List<Resultado> lista = controller.listarResultados();
+
+        for (Resultado r : lista) {
+            modelo.addRow(new Object[]{
+                r.getId(),
+                r.getNombrePrueba(),
+                r.getFecha(),
+                r.getNota(),
+                "Revisar"
+            });
+        }
+    }
+    
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            recargarDatos();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;

@@ -114,7 +114,7 @@ public class VerPruebasPanel extends javax.swing.JPanel {
             System.out.println("👉 Iniciar prueba con ID: " + pruebaId);
             Prueba prueba = new PruebaController().cargarPruebaCompleta(pruebaId); // este método lo creás
             AplicarPruebaPanel aplicarPrueba = new AplicarPruebaPanel(mainFrame, prueba);
-            
+
             mainFrame.getMainPanel().add(aplicarPrueba, "aplicarPrueba");
             mainFrame.mostrarVista("aplicarPrueba");
             // Acá abrís el panel de aplicación de prueba (cuando lo tengas)
@@ -126,7 +126,25 @@ public class VerPruebasPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         mainFrame.mostrarVista("menu");
     }//GEN-LAST:event_btnVolverActionPerformed
+    public void recargarDatos() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
 
+        PruebaController controller = new PruebaController();
+        List<Prueba> listaDePruebas = controller.listarPruebas();
+
+        for (Prueba p : listaDePruebas) {
+            modelo.addRow(new Object[]{p.getId(), p.getNombre(), p.getFecha(), "Iniciar"});
+        }
+    }
+    
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            recargarDatos();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVolver;

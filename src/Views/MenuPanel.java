@@ -9,7 +9,9 @@ package Views;
  * @author Esteban
  */
 public class MenuPanel extends javax.swing.JPanel {
+
     private MainFrame mainFrame;
+
     /**
      * Creates new form MenuPanel
      */
@@ -96,7 +98,7 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         mainFrame.mostrarVista("verResultados");
+        mainFrame.mostrarVista("verResultados");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnNewTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTestActionPerformed
