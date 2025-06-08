@@ -91,7 +91,7 @@ public class ResultadoPanel extends javax.swing.JPanel {
 
     private void btnVolverMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverMenuActionPerformed
         // TODO add your handling code here:
-        mainFrame.mostrarVista("menu");
+       mainFrame.mostrarVista("menu");
     }//GEN-LAST:event_btnVolverMenuActionPerformed
 
     private void btnRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevisarActionPerformed

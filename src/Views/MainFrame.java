@@ -28,13 +28,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         //Cargar panel menú inicial
         MenuPanel menu = new MenuPanel(this);
-        verPruebasPanel verPanel = new verPruebasPanel(this);
-        verResultadosPanel verResultado = new verResultadosPanel(this);
+        VerPruebasPanel verPanel = new VerPruebasPanel(this);
+        VerResultadosPanel verResultado = new VerResultadosPanel(this);
+        CrearPruebaPanel crearPrueba = new CrearPruebaPanel(this);
 
         mainPanel.add(menu, "menu");
         mainPanel.add(verPanel, "verPruebas");
         mainPanel.add(verResultado, "verResultados");
-        
+        mainPanel.add(crearPrueba, "crearPrueba");
+
         // Mostrar el panel de inicio
         mostrarVista("menu");
     }

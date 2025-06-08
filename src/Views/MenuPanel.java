@@ -36,6 +36,11 @@ public class MenuPanel extends javax.swing.JPanel {
 
         btnNewTest.setText("Crear prueba");
         btnNewTest.setToolTipText("");
+        btnNewTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewTestActionPerformed(evt);
+            }
+        });
 
         btnShowTests.setText("Ver pruebas");
         btnShowTests.setToolTipText("");
@@ -93,6 +98,11 @@ public class MenuPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
          mainFrame.mostrarVista("verResultados");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnNewTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTestActionPerformed
+        // TODO add your handling code here:
+        mainFrame.mostrarVista("crearPrueba");
+    }//GEN-LAST:event_btnNewTestActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
