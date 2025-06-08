@@ -15,7 +15,7 @@ public class Conexion {
     String sqlUser = "root";
     String sqlPass = "root";
     String driver = "com.mysql.cj.jdbc.Driver";
-    String conRoute = "jdbc:mysql://localhost:3306";
+    String conRoute = "jdbc:mysql://localhost:3306/sistema_pruebas";
     
     public Connection Connect(){
         try {
