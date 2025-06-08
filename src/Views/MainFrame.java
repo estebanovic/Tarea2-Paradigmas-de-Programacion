@@ -14,20 +14,22 @@ import Views.MenuPanel;
  * @author Esteban
  */
 public class MainFrame extends javax.swing.JFrame {
+
     private CardLayout layout;
     private JPanel contentPanel;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         setTitle("Sistema de pruebas - Bloom");
-        setSize(800, 600);
-        
+        setSize(750, 450);
+
         //Cargar panel menú inicial
         MenuPanel menu = new MenuPanel(this);
         verPruebasPanel verPanel = new verPruebasPanel(this);
-        
+
         mainPanel.add(menu, "menu");
         mainPanel.add(verPanel, "verPruebas");
         // Mostrar el panel de inicio
@@ -64,10 +66,10 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void mostrarVista(String nombre) {
-    CardLayout cl = (CardLayout)(mainPanel.getLayout());
-    cl.show(mainPanel, nombre);
-}
-    
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        cl.show(mainPanel, nombre);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -101,6 +103,10 @@ public class MainFrame extends javax.swing.JFrame {
                 new MainFrame().setVisible(true);
             }
         });
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

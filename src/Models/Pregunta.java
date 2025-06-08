@@ -12,7 +12,8 @@ import java.util.List;
  * @author Esteban
  */
 public class Pregunta {
-     private int id;
+
+    private int id;
     private String enunciado;
     private String tipo; // "VF" o "MULTIPLE"
     private String nivelBloom;
@@ -31,7 +32,6 @@ public class Pregunta {
         this.opciones = opciones;
         this.respuestaCorrecta = respuestaCorrecta;
     }
-    
 
     public int getId() {
         return id;
@@ -72,8 +72,9 @@ public class Pregunta {
     public void setOpciones(List<Opcion> opciones) {
         this.opciones = opciones;
     }
-    
-      public void agregarOpcion(Opcion o) {
+
+    public void agregarOpcion(Opcion o) {
+        System.out.println("agregando opcion: " + o);
         opciones.add(o);
     }
 
@@ -84,5 +85,24 @@ public class Pregunta {
     public void setRespuestaCorrecta(String respuestaCorrecta) {
         this.respuestaCorrecta = respuestaCorrecta;
     }
-    
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("📄 Pregunta ID: ").append(id)
+                .append(", Nombre: ").append(enunciado)
+                .append(", Tipo: ").append(tipo)
+                .append(", nivelbloom: ").append(nivelBloom).append("\n");
+
+        char letra = 'a';
+        for (Opcion opcion : opciones) {
+            sb.append("     ").append(letra++).append(") ").append(opcion.getTexto());
+            if (opcion.isEsCorrecta()) {
+                sb.append(" ✅");
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
 }

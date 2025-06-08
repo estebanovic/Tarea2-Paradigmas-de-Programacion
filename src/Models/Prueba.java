@@ -66,7 +66,25 @@ public class Prueba {
 
     @Override
     public String toString() {
-        return "Prueba ID: " + id + ", Nombre: " + nombre + ", Fecha: " + fecha;
-    }
+        StringBuilder sb = new StringBuilder();
+        sb.append("📄 Prueba ID: ").append(id)
+                .append(", Nombre: ").append(nombre)
+                .append(", Fecha: ").append(fecha).append("\n");
 
+        int numPregunta = 1;
+        for (Pregunta pregunta : preguntas) {
+            sb.append("  ").append(numPregunta++).append(". ❓ ")
+                    .append(pregunta.getEnunciado()).append(" [").append(pregunta.getTipo()).append(" - ").append(pregunta.getNivelBloom()).append("]\n");
+
+            char letra = 'a';
+            for (Opcion opcion : pregunta.getOpciones()) {
+                sb.append("     ").append(letra++).append(") ").append(opcion.getTexto());
+                if (opcion.isEsCorrecta()) {
+                    sb.append(" ✅");
+                }
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }

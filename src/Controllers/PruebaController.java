@@ -23,10 +23,10 @@ public class PruebaController {
 
     private Conexion conexion = new Conexion();
     private PreguntaController preguntaController = new PreguntaController();
-    
+
     public boolean guardarPrueba(Prueba prueba) {
         String sql = "INSERT INTO pruebas (nombre, fecha) VALUES (?, ?)";
-        
+
         try (Connection con = conexion.Connect()) {
             con.setAutoCommit(false);
 
@@ -55,26 +55,53 @@ public class PruebaController {
             return false;
         }
     }
+
     public List<Prueba> listarPruebas() {
-    List<Prueba> lista = new ArrayList<>();
-    String sql = "SELECT * FROM pruebas";
+        List<Prueba> lista = new ArrayList<>();
+        String sql = "SELECT * FROM pruebas";
 
-    try (Connection con = conexion.Connect();
-         PreparedStatement stmt = con.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
+        try (Connection con = conexion.Connect(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
-        while (rs.next()) {
-            Prueba p = new Prueba();
-            p.setId(rs.getInt("id"));
-            p.setNombre(rs.getString("nombre"));
-            p.setFecha(rs.getDate("fecha"));
-            lista.add(p);
+            while (rs.next()) {
+                Prueba p = new Prueba();
+                p.setId(rs.getInt("id"));
+                p.setNombre(rs.getString("nombre"));
+                p.setFecha(rs.getDate("fecha"));
+                lista.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return lista;
     }
 
-    return lista;
-}
+    public Prueba cargarPruebaCompleta(int pruebaId) {
+        Prueba prueba = null;
+        String sql = "SELECT * FROM pruebas WHERE id = ?";
+
+        try (Connection con = conexion.Connect()) {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, pruebaId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                prueba = new Prueba();
+                prueba.setId(rs.getInt("id"));
+                prueba.setNombre(rs.getString("nombre"));
+                prueba.setFecha(rs.getDate("fecha"));
+
+                // Llamar al controlador de preguntas
+                List<Pregunta> preguntas = preguntaController.obtenerPreguntasDePrueba(pruebaId, con);
+                for (Pregunta p : preguntas) {
+                    prueba.agregarPregunta(p);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return prueba;
+    }
 }

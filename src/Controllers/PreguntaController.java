@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -38,4 +40,36 @@ public class PreguntaController {
             }
         }
     }
+
+    public List<Pregunta> obtenerPreguntasDePrueba(int pruebaId, Connection con) {
+        List<Pregunta> preguntas = new ArrayList<>();
+        String sql = "SELECT * FROM preguntas WHERE prueba_id = ?";
+
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, pruebaId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Pregunta pregunta = new Pregunta();
+                int preguntaId = rs.getInt("id");
+                pregunta.setId(preguntaId);
+                pregunta.setEnunciado(rs.getString("enunciado"));
+                pregunta.setTipo(rs.getString("tipo"));
+                pregunta.setNivelBloom(rs.getString("nivel_bloom"));
+
+                // Llamar al controlador de opciones
+                List<Opcion> opciones = opcionController.obtenerOpcionesDePregunta(preguntaId, con);
+                pregunta.setOpciones(opciones);
+
+                preguntas.add(pregunta);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return preguntas;
+    }
+
 }
