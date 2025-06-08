@@ -54,7 +54,7 @@ public class AplicarPruebaPanel extends javax.swing.JPanel {
 
             // REGISTRA EVENTO para habilitar el botón "Siguiente"
             rb.addActionListener(e -> btnSiguiente.setEnabled(true));
-            
+
             grupoOpciones.add(rb);
             panelOpciones.add(rb);
 
@@ -97,6 +97,7 @@ public class AplicarPruebaPanel extends javax.swing.JPanel {
         for (int i = 0; i < prueba.getPreguntas().size(); i++) {
             Pregunta pregunta = prueba.getPreguntas().get(i);
             String resp = respuestasUsuario.get(i);
+
             for (Opcion o : pregunta.getOpciones()) {
                 if (o.isEsCorrecta() && o.getTexto().equals(resp)) {
                     correctas++;
@@ -104,10 +105,11 @@ public class AplicarPruebaPanel extends javax.swing.JPanel {
             }
         }
 
-        double nota = (correctas * 10.0) / prueba.getPreguntas().size();
-        JOptionPane.showMessageDialog(this, "Has completado la prueba.\nNota: " + String.format("%.2f", nota));
+        double nota = ((correctas * 6.0) / prueba.getPreguntas().size()) + 1;
 
-        mainFrame.mostrarVista("menu");
+        ResultadoPanel resultado = new ResultadoPanel(mainFrame, prueba, respuestasUsuario, nota);
+        mainFrame.getMainPanel().add(resultado, "resultado");
+        mainFrame.mostrarVista("resultado");
     }
 
     /**
