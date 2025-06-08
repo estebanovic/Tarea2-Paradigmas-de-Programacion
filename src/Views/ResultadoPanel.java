@@ -4,7 +4,12 @@
  */
 package Views;
 
+import Models.Opcion;
 import Models.Prueba;
+import Models.Pregunta;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,7 +20,7 @@ public class ResultadoPanel extends javax.swing.JPanel {
     private MainFrame mainFrame;
     private double nota;
     private Prueba prueba;
-    private java.util.List<String> respuestas;
+    private List<String> respuestas;
 
     /**
      * Creates new form ResultadoPanel
@@ -28,6 +33,50 @@ public class ResultadoPanel extends javax.swing.JPanel {
         initComponents();
 
         notaResultado.setText("Tu nota es: " + String.format("%.1f", nota));
+
+        // Calcular desglose por tipo y nivel Bloom
+        Map<String, Integer> totalPorTipo = new HashMap<>();
+        Map<String, Integer> correctasPorTipo = new HashMap<>();
+        Map<String, Integer> totalPorNivel = new HashMap<>();
+        Map<String, Integer> correctasPorNivel = new HashMap<>();
+
+        List<Pregunta> preguntas = prueba.getPreguntas();
+
+        for (int i = 0; i < preguntas.size(); i++) {
+            Pregunta p = preguntas.get(i);
+            String tipo = p.getTipo();
+            String nivel = p.getNivelBloom();
+            String respuestaUsuario = respuestas.get(i);
+
+            totalPorTipo.put(tipo, totalPorTipo.getOrDefault(tipo, 0) + 1);
+            totalPorNivel.put(nivel, totalPorNivel.getOrDefault(nivel, 0) + 1);
+
+            for (Opcion o : p.getOpciones()) {
+                if (o.isEsCorrecta() && o.getTexto().equals(respuestaUsuario)) {
+                    correctasPorTipo.put(tipo, correctasPorTipo.getOrDefault(tipo, 0) + 1);
+                    correctasPorNivel.put(nivel, correctasPorNivel.getOrDefault(nivel, 0) + 1);
+                }
+            }
+        }
+
+        StringBuilder resumen = new StringBuilder();
+        resumen.append("📊 Porcentaje de aciertos por <strong>tipo</strong>: <br>");
+        for (String tipo : totalPorTipo.keySet()) {
+            int total = totalPorTipo.get(tipo);
+            int aciertos = correctasPorTipo.getOrDefault(tipo, 0);
+            double porcentaje = (aciertos * 100.0) / total;
+            resumen.append("- ").append(tipo).append(": ").append(String.format("%.1f", porcentaje)).append("% <br>");
+        }
+
+        resumen.append("<br>📘 Porcentaje de aciertos por <strong>nivel Bloom</strong>:<br>");
+        for (String nivel : totalPorNivel.keySet()) {
+            int total = totalPorNivel.get(nivel);
+            int aciertos = correctasPorNivel.getOrDefault(nivel, 0);
+            double porcentaje = (aciertos * 100.0) / total;
+            resumen.append("- ").append(nivel).append(": ").append(String.format("%.1f", porcentaje)).append("% <br>");
+        }
+        
+        resumenResultado.setText("<html>" + resumen.toString()+ "</html>");
     }
 
     /**
@@ -42,6 +91,7 @@ public class ResultadoPanel extends javax.swing.JPanel {
         notaResultado = new javax.swing.JLabel();
         btnVolverMenu = new javax.swing.JButton();
         btnRevisar = new javax.swing.JButton();
+        resumenResultado = new javax.swing.JLabel();
 
         notaResultado.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 18)); // NOI18N
         notaResultado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -62,6 +112,9 @@ public class ResultadoPanel extends javax.swing.JPanel {
             }
         });
 
+        resumenResultado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        resumenResultado.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,11 +122,12 @@ public class ResultadoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(179, 179, 179)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(notaResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnVolverMenu)
+                        .addComponent(btnVolverMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRevisar))
-                    .addComponent(notaResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnRevisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(resumenResultado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(184, 184, 184))
         );
         layout.setVerticalGroup(
@@ -81,17 +135,19 @@ public class ResultadoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(notaResultado)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
+                .addComponent(resumenResultado)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVolverMenu)
                     .addComponent(btnRevisar))
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverMenuActionPerformed
         // TODO add your handling code here:
-       mainFrame.mostrarVista("menu");
+        mainFrame.mostrarVista("menu");
     }//GEN-LAST:event_btnVolverMenuActionPerformed
 
     private void btnRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevisarActionPerformed
@@ -106,5 +162,6 @@ public class ResultadoPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnRevisar;
     private javax.swing.JButton btnVolverMenu;
     private javax.swing.JLabel notaResultado;
+    private javax.swing.JLabel resumenResultado;
     // End of variables declaration//GEN-END:variables
 }
