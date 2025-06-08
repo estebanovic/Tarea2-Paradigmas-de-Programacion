@@ -26,7 +26,7 @@ public class ResultadoPanel extends javax.swing.JPanel {
         this.respuestas = respuestas;
         this.nota = nota;
         initComponents();
-        
+
         notaResultado.setText("Tu nota es: " + String.format("%.1f", nota));
     }
 
@@ -96,6 +96,9 @@ public class ResultadoPanel extends javax.swing.JPanel {
 
     private void btnRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevisarActionPerformed
         // TODO add your handling code here:
+        RevisarPruebaPanel revisar = new RevisarPruebaPanel(mainFrame, prueba, respuestas);
+        mainFrame.getMainPanel().add(revisar, "revisarPrueba");
+        mainFrame.mostrarVista("revisarPrueba");
     }//GEN-LAST:event_btnRevisarActionPerformed
 
 
