@@ -4,11 +4,14 @@
  */
 package Views;
 
+import Controllers.ResultadoController;
 import Models.Opcion;
 import Models.Pregunta;
 import Models.Prueba;
+import Models.Resultado;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -107,8 +110,16 @@ public class AplicarPruebaPanel extends javax.swing.JPanel {
 
         double nota = ((correctas * 6.0) / prueba.getPreguntas().size()) + 1;
 
-        ResultadoPanel resultado = new ResultadoPanel(mainFrame, prueba, respuestasUsuario, nota);
-        mainFrame.getMainPanel().add(resultado, "resultado");
+        Resultado resultado = new Resultado();
+        resultado.setPruebaId(prueba.getId());
+        resultado.setFecha(new Date());
+        resultado.setNota(nota);
+
+        ResultadoController rc = new ResultadoController();
+        rc.guardarResultadoConRespuestas(resultado, prueba, respuestasUsuario);
+        
+        ResultadoPanel resultadoPanel = new ResultadoPanel(mainFrame, prueba, respuestasUsuario, nota);
+        mainFrame.getMainPanel().add(resultadoPanel, "resultado");
         mainFrame.mostrarVista("resultado");
     }
 
