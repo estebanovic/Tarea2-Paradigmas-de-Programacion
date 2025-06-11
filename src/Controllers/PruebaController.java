@@ -67,9 +67,11 @@ public class PruebaController {
                 p.setId(rs.getInt("id"));
                 p.setNombre(rs.getString("nombre"));
                 p.setFecha(rs.getDate("fecha"));
+                 List<Pregunta> preguntas = preguntaController.obtenerPreguntasDePrueba(rs.getInt("id"), con);
+                p.setPreguntas(preguntas); 
+
                 lista.add(p);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

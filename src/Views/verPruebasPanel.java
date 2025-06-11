@@ -30,7 +30,9 @@ public class VerPruebasPanel extends javax.swing.JPanel {
         List<Prueba> listaDePruebas = controller.listarPruebas();
 
         for (Prueba p : listaDePruebas) {
-            modelo.addRow(new Object[]{p.getId(), p.getNombre(), p.getFecha(), "Iniciar"});
+            System.out.println(p.getPreguntas());
+            System.out.println(p.getCantidadPreguntas());
+            modelo.addRow(new Object[]{p.getId(), p.getNombre(), p.getFecha(), p.getCantidadPreguntas(),  (p.getCantidadPreguntas() * 0.5) + "m" , "Iniciar"});
         }
     }
 
@@ -49,17 +51,17 @@ public class VerPruebasPanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Fecha", "Acción"
+                "ID", "Nombre", "Fecha", "Número de preguntas", "Tiempo Estimado", "Acción"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -109,7 +111,7 @@ public class VerPruebasPanel extends javax.swing.JPanel {
         int row = jTable1.rowAtPoint(evt.getPoint());
         int col = jTable1.columnAtPoint(evt.getPoint());
 
-        if (col == 3) { // Columna "Acción"
+        if (col == 5) { // Columna "Acción"
             int pruebaId = (int) jTable1.getValueAt(row, 0);
             System.out.println("👉 Iniciar prueba con ID: " + pruebaId);
             Prueba prueba = new PruebaController().cargarPruebaCompleta(pruebaId); // este método lo creás
@@ -134,7 +136,7 @@ public class VerPruebasPanel extends javax.swing.JPanel {
         List<Prueba> listaDePruebas = controller.listarPruebas();
 
         for (Prueba p : listaDePruebas) {
-            modelo.addRow(new Object[]{p.getId(), p.getNombre(), p.getFecha(), "Iniciar"});
+            modelo.addRow(new Object[]{p.getId(), p.getNombre(), p.getFecha(), p.getCantidadPreguntas(),  (p.getCantidadPreguntas() * 0.5) + "m" ,"Iniciar"});
         }
     }
     

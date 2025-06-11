@@ -55,6 +55,10 @@ public class Prueba {
     public List<Pregunta> getPreguntas() {
         return preguntas;
     }
+    
+    public int getCantidadPreguntas() {
+        return preguntas.size();
+    }
 
     public void setPreguntas(List<Pregunta> preguntas) {
         this.preguntas = preguntas;
